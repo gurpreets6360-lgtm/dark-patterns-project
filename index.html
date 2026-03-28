@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dark Patterns Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Illusion of Choice</h1>
+  <p>Explore how websites manipulate users</p>
+</header>
+
+<section>
+  <h2>What are Dark Patterns?</h2>
+  <p>Design tricks used to influence your decisions online.</p>
+</section>
+
+<!-- Confirmshaming -->
+<section class="card">
+  <h2>Confirmshaming</h2>
+  <p>Guilt-based messaging to influence users.</p>
+  <button class="main-btn">Yes, I want to save money!</button>
+  <p class="small-text">No, I don’t care about saving money</p>
+</section>
+
+<!-- Roach Motel -->
+<section class="card">
+  <h2>Roach Motel</h2>
+  <p>Easy to sign up, hard to cancel.</p>
+  <button onclick="signup()">Sign Up</button>
+  <button id="cancelBtn" class="hidden">Cancel Subscription</button>
+</section>
+
+<!-- Nagging -->
+<section class="card">
+  <h2>Nagging</h2>
+  <p>Repeated pop-ups forcing action.</p>
+  <button onclick="showPopup()">Trigger Pop-up</button>
+</section>
+
+<!-- Popup -->
+<div id="popup" class="popup hidden">
+  <p>Subscribe Now!</p>
+  <button onclick="closePopup()">Close</button>
+</div>
+
+<section>
+  <h2>Ethical Design</h2>
+  <ul>
+    <li>Clear choices</li>
+    <li>No manipulation</li>
+    <li>Easy unsubscribe</li>
+    <li>Respect users</li>
+  </ul>
+</section>
+
+<footer>
+  <p>Educational Project</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
