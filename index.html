@@ -287,6 +287,48 @@ buttons.forEach(btn=>{
     btn.addEventListener('mouseout',()=>btn.style.transform='scale(1)');
 });
 </script>
+<!-- ===== Interactive Script ===== -->
+<script>
+let nagDismissed = false;
+
+function showFeedback(type, message) {
+    const feedbackDiv = document.getElementById(`${type}-feedback`);
+    if(feedbackDiv){
+        feedbackDiv.textContent = message;
+        feedbackDiv.className = `feedback-message show ${message.includes('⚠️') ? 'warning-message':'success-message'}`;
+        setTimeout(()=>{feedbackDiv.classList.remove('show');},3000);
+    }
+}
+
+function subscribe(){ showFeedback('subscribe','✅ You subscribed!'); }
+function unsubscribe(){ showFeedback('unsubscribe','⚠️ You clicked: No, I don’t want to save money!'); }
+function attemptCancel(){ showFeedback('roach','⚠️ You went through multiple steps to cancel!'); }
+
+function dismissNag(id){
+    const nag=document.getElementById(`nag${id}`);
+    if(nag){ nag.style.display='none'; showFeedback('nagging','⚠️ You dismissed the popup. It may return!'); }
+}
+function enableNotifications(){
+    document.getElementById('nag1').style.display='none';
+    showFeedback('nagging','✅ Notifications enabled');
+    nagDismissed=true;
+}
+function triggerNag(){
+    const nag=document.getElementById('nag1');
+    if(!nagDismissed && nag.style.display==='none'){
+        nag.style.display='block'; showFeedback('nagging','⚠️ Popup returned!');
+    } else if(nagDismissed){
+        showFeedback('nagging','Thanks! Already handled.');
+    }
+}
+
+// Optional hover animation
+const buttons = document.querySelectorAll('button');
+buttons.forEach(btn=>{
+    btn.addEventListener('mouseover',()=>btn.style.transform='scale(1.05)');
+    btn.addEventListener('mouseout',()=>btn.style.transform='scale(1)');
+});
+</script>
 
 </body>
 </html>
