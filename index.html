@@ -220,6 +220,34 @@
         if(!nagDismissed && nag.style.display==='none'){ nag.style.display='block';
             showFeedback('nagging','⚠️ Popup returned!'); }
         else if(nagDismissed){ showFeedback('nagging','Thanks! Already handled.'); } }
+    <script>
+    let nagDismissed = false;
+    function showFeedback(type,message){
+        const el=document.getElementById(type+'-feedback');
+        if(el){ 
+            el.textContent=message;
+            el.className='feedback-message show '+(message.includes('⚠️')?'warning-message':'success-message');
+            setTimeout(()=>{el.classList.remove('show');},3000);
+        }
+    }
+    function dismissNag(id){
+        document.getElementById('nag'+id).style.display='none';
+        showFeedback('nagging','⚠️ You dismissed the popup. It may return!');
+    }
+    function enableNotifications(){
+        document.getElementById('nag1').style.display='none';
+        showFeedback('nagging','✅ Notifications enabled');
+        nagDismissed=true;
+    }
+    function triggerNag(){
+        const nag=document.getElementById('nag1');
+        if(!nagDismissed && nag.style.display==='none'){
+            nag.style.display='block';
+            showFeedback('nagging','⚠️ Popup returned!');
+        } else if(nagDismissed){
+            showFeedback('nagging','Thanks! Already handled.');
+        }
+    }
 </script>
 </body>
 </html>
