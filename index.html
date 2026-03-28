@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Illusion of Choice | Dark Patterns Demo</title>
 <style>
-/* ========== Base Styles ========== */
+/* ===== Base Styles ===== */
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;
@@ -110,6 +110,7 @@ h1,h2,h3,h4,h5 { margin: 0; }
 </style>
 </head>
 <body>
+
 <!-- ===== Navigation ===== -->
 <nav class="nav">
     <div class="nav-container">
@@ -125,7 +126,6 @@ h1,h2,h3,h4,h5 { margin: 0; }
 
 <!-- ===== Hero ===== -->
 <div class="hero">
-    <div class="warning-badge">⚠️ Educational Demo</div>
     <h1>Understanding Dark Patterns</h1>
     <p class="subtitle">How websites manipulate user choices — and how to spot them</p>
     <button class="btn btn-primary" onclick="document.getElementById('dark-patterns').scrollIntoView({behavior:'smooth'})">Explore Examples →</button>
@@ -238,54 +238,42 @@ h1,h2,h3,h4,h5 { margin: 0; }
 <p style="margin-top:1rem;font-size:0.85rem;">© 2024 Illusion of Choice | Educational Purpose Only</p>
 </div>
 </footer>
-</div>
 
 <!-- ===== Interactive Script ===== -->
 <script>
 let nagDismissed = false;
-
 function showFeedback(type, message) {
     const feedbackDiv = document.getElementById(`${type}-feedback`);
-    if(feedbackDiv){
+    if (feedbackDiv) {
         feedbackDiv.textContent = message;
-        feedbackDiv.className = `feedback-message show ${message.includes('⚠️') ? 'warning-message':'success-message'}`;
-        setTimeout(()=>{feedbackDiv.classList.remove('show');},3000);
+        feedbackDiv.className = `feedback-message show ${message.includes('⚠️') ? 'warning-message' : 'success-message'}`;
+        setTimeout(() => { feedbackDiv.classList.remove('show'); }, 3000);
     }
 }
-
-/* Confirmshaming */
 function subscribe(){ showFeedback('subscribe','✅ You subscribed!'); }
 function unsubscribe(){ showFeedback('unsubscribe','⚠️ You clicked: No, I don’t want to save money!'); }
-
-/* Roach Motel */
 function attemptCancel(){ showFeedback('roach','⚠️ You went through multiple steps to cancel!'); }
-
-/* Nagging */
 function dismissNag(id){
     const nag=document.getElementById(`nag${id}`);
     if(nag){ nag.style.display='none'; showFeedback('nagging','⚠️ You dismissed the popup. It may return!'); }
 }
 function enableNotifications(){
-    document.getElementById('nag1').style.display='none';
+    const nag=document.getElementById('nag1');
+    if(nag) nag.style.display='none';
     showFeedback('nagging','✅ Notifications enabled');
     nagDismissed=true;
 }
 function triggerNag(){
     const nag=document.getElementById('nag1');
-    if(!nagDismissed && nag.style.display==='none'){
-        nag.style.display='block';
-        showFeedback('nagging','⚠️ Popup returned!');
-    } else if(nagDismissed){
-        showFeedback('nagging','Thanks! Already handled.');
-    }
+    if(!nagDismissed && nag.style.display==='none'){ nag.style.display='block'; showFeedback('nagging','⚠️ Popup returned!'); }
+    else if(nagDismissed){ showFeedback('nagging','Thanks! Already handled.'); }
 }
-
-/* Button hover animation */
-const buttons = document.querySelectorAll('button');
-buttons.forEach(btn=>{
+// Button hover animation
+document.querySelectorAll('button').forEach(btn=>{
     btn.addEventListener('mouseover',()=>btn.style.transform='scale(1.05)');
     btn.addEventListener('mouseout',()=>btn.style.transform='scale(1)');
 });
-    
+</script>
+
 </body>
 </html>
