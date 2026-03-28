@@ -240,8 +240,11 @@ h1,h2,h3,h4,h5 { margin: 0; }
 </footer>
 
 <!-- ===== Interactive Script ===== -->
+
 <script>
 let nagDismissed = false;
+
+// Show feedback messages
 function showFeedback(type, message) {
     const feedbackDiv = document.getElementById(`${type}-feedback`);
     if (feedbackDiv) {
@@ -250,30 +253,39 @@ function showFeedback(type, message) {
         setTimeout(() => { feedbackDiv.classList.remove('show'); }, 3000);
     }
 }
+
+/* Dark pattern interactions */
 function subscribe(){ showFeedback('subscribe','✅ You subscribed!'); }
 function unsubscribe(){ showFeedback('unsubscribe','⚠️ You clicked: No, I don’t want to save money!'); }
 function attemptCancel(){ showFeedback('roach','⚠️ You went through multiple steps to cancel!'); }
+
 function dismissNag(id){
-    const nag=document.getElementById(`nag${id}`);
-    if(nag){ nag.style.display='none'; showFeedback('nagging','⚠️ You dismissed the popup. It may return!'); }
+    const nag = document.getElementById(`nag${id}`);
+    if (nag) { nag.style.display = 'none'; showFeedback('nagging','⚠️ You dismissed the popup. It may return!'); }
 }
 function enableNotifications(){
-    const nag=document.getElementById('nag1');
-    if(nag) nag.style.display='none';
+    const nag = document.getElementById('nag1');
+    if (nag) nag.style.display = 'none';
     showFeedback('nagging','✅ Notifications enabled');
-    nagDismissed=true;
+    nagDismissed = true;
 }
 function triggerNag(){
-    const nag=document.getElementById('nag1');
-    if(!nagDismissed && nag.style.display==='none'){ nag.style.display='block'; showFeedback('nagging','⚠️ Popup returned!'); }
-    else if(nagDismissed){ showFeedback('nagging','Thanks! Already handled.'); }
+    const nag = document.getElementById('nag1');
+    if (!nagDismissed && nag.style.display === 'none'){
+        nag.style.display = 'block';
+        showFeedback('nagging','⚠️ Popup returned!');
+    } else if (nagDismissed){
+        showFeedback('nagging','Thanks! Already handled.');
+    }
 }
-// Button hover animation
-document.querySelectorAll('button').forEach(btn=>{
-    btn.addEventListener('mouseover',()=>btn.style.transform='scale(1.05)');
-    btn.addEventListener('mouseout',()=>btn.style.transform='scale(1)');
+
+// Optional hover animation
+document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('mouseover', () => btn.style.transform = 'scale(1.05)');
+    btn.addEventListener('mouseout', () => btn.style.transform = 'scale(1)');
 });
 </script>
+    
 
 </body>
 </html>
