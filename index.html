@@ -3,97 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Illusion of Choice | Understanding Dark Patterns</title>
+<title>Illusion of Choice | Dark Patterns Demo</title>
 <style>
-    html { scroll-behavior: smooth; }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: #1a1a2e; line-height:1.6; }
-    /* Navigation */
-    .nav { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
-        box-shadow: 0 2px 20px rgba(0,0,0,0.1); position: sticky; top:0; z-index:1000; }
-    .nav-container { max-width:1200px; margin:0 auto; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
-    .logo { font-size:1.5rem; font-weight:bold; background:linear-gradient(135deg,#667eea,#764ba2); -webkit-background-clip:text; background-clip:text; color:transparent; }
-    .nav-links { display:flex; gap:2rem; flex-wrap:wrap; }
-    .nav-links a { text-decoration:none; color:#4a5568; font-weight:500; transition:color 0.3s; }
-    .nav-links a:hover { color:#667eea; }
+/* ========== Base Styles ========== */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #1a1a2e;
+    line-height: 1.6;
+}
+a { text-decoration: none; }
+h1,h2,h3,h4,h5 { margin: 0; }
 
-    .container { max-width:1200px; margin:0 auto; padding:2rem; }
+/* ===== Navigation ===== */
+.nav {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo { font-size: 1.5rem; font-weight: bold; background: linear-gradient(135deg, #667eea,#764ba2); -webkit-background-clip: text; color: transparent; }
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a { color: #4a5568; font-weight: 500; transition: color 0.3s; }
+.nav-links a:hover { color: #667eea; }
 
-    /* Hero */
-    .hero { text-align:center; padding:4rem 2rem; background: rgba(255,255,255,0.95); border-radius:30px; margin-bottom:3rem; box-shadow:0 20px 40px rgba(0,0,0,0.1); }
-    .hero h1 { font-size:3rem; margin-bottom:1rem; background:linear-gradient(135deg,#667eea,#764ba2); -webkit-background-clip:text; background-clip:text; color:transparent; }
-    .hero .subtitle { font-size:1.2rem; color:#4a5568; margin-bottom:2rem; }
-    .warning-badge { display:inline-block; background:#ff4757; color:white; padding:0.5rem 1rem; border-radius:50px; font-size:0.9rem; margin-bottom:1rem; }
+/* ===== Hero ===== */
+.hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(255,255,255,0.95);
+    border-radius: 30px;
+    margin: 2rem auto;
+    max-width: 1000px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+.hero h1 { font-size: 3rem; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; color: transparent; margin-bottom: 1rem; }
+.hero .subtitle { font-size: 1.2rem; color: #4a5568; margin-bottom: 2rem; }
+.btn { display: inline-block; padding: 0.75rem 1.5rem; border-radius: 10px; font-weight: 500; transition: all 0.3s; cursor: pointer; border: none; }
+.btn-primary { background: #667eea; color: white; }
+.btn-primary:hover { background: #5a67d8; transform: translateY(-2px); }
 
-    /* Cards */
-    .patterns-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(350px,1fr)); gap:2rem; margin-bottom:4rem; }
-    .pattern-card { background:white; border-radius:20px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; }
-    .pattern-card:hover { transform:translateY(-5px); box-shadow:0 20px 40px rgba(0,0,0,0.15); }
-    .card-header { padding:1.5rem; color:white; }
-    .card-header.confirmshaming { background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%); }
-    .card-header.roach { background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%); }
-    .card-header.nagging { background:linear-gradient(135deg,#fa709a 0%,#fee140 100%); }
-    .card-header h2 { font-size:1.8rem; margin-bottom:0.5rem; }
-    .card-content { padding:1.5rem; }
-    .demo-box { background:#f7fafc; border-radius:12px; padding:1.5rem; margin:1rem 0; border:2px solid #e2e8f0; }
+/* ===== Cards Grid ===== */
+.patterns-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(350px,1fr)); gap: 2rem; margin: 3rem 0; }
+.pattern-card { background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; }
+.pattern-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+.card-header { padding: 1.5rem; color: white; border-radius: 20px 20px 0 0; }
+.card-header.confirmshaming { background: linear-gradient(135deg, #f093fb, #f5576c); }
+.card-header.roach { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+.card-header.nagging { background: linear-gradient(135deg, #fa709a, #fee140); }
+.card-content { padding: 1.5rem; }
+.demo-box { background: #f7fafc; border-radius: 12px; padding: 1rem; margin: 1rem 0; border: 2px solid #e2e8f0; }
 
-    /* Dark Pattern Demos */
-    .confirmshaming-demo { text-align:center; }
-    .guilt-button { width:100%; padding:1rem; margin:0.5rem 0; border:none; border-radius:10px; font-size:1rem; cursor:pointer; transition: transform 0.2s; }
-    .guilt-button.no-button { background:#ff4757; color:white; }
-    .guilt-button.no-button:hover { transform:scale(1.02); }
-    .cancel-steps { background:#f1f3f5; padding:1rem; border-radius:8px; margin:1rem 0; }
-    .cancel-step { padding:0.75rem; margin:0.5rem 0; background:white; border-radius:6px; border-left:3px solid #ff4757; }
-    .nagging-popup { background:white; border-radius:12px; padding:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.15); margin:1rem 0; animation:slideIn 0.3s ease-out; }
-    @keyframes slideIn { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
+/* Buttons */
+.guilt-button { width: 100%; padding: 1rem; margin: 0.5rem 0; border-radius: 10px; font-size: 1rem; cursor: pointer; border: none; transition: transform 0.2s; }
+.guilt-button:hover { transform: scale(1.02); }
+.no-button { background: #ff4757; color: white; }
+.yes-button { background: #667eea; color: white; }
 
-    /* Ethical Section */
-    .ethical-section { background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%); border-radius:20px; padding:3rem; color:white; margin:3rem 0; }
-    .ethical-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:2rem; margin-top:2rem; }
-    .ethical-item { text-align:center; padding:1.5rem; background: rgba(255,255,255,0.1); border-radius:15px; backdrop-filter:blur(10px); }
-    .ethical-item h3 { margin-bottom:0.5rem; }
+/* Cancel Steps (Roach Motel) */
+.cancel-steps { background: #f1f3f5; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+.cancel-step { padding: 0.75rem; margin: 0.5rem 0; background: white; border-radius: 6px; border-left: 3px solid #ff4757; }
 
-    /* Comparison Table */
-    .comparison-table { background:white; border-radius:20px; overflow:hidden; margin:3rem 0; box-shadow:0 10px 30px rgba(0,0,0,0.1); }
-    .comparison-table table { width:100%; border-collapse:collapse; }
-    .comparison-table th, .comparison-table td { padding:1rem; text-align:left; border-bottom:1px solid #e2e8f0; }
-    .comparison-table th { background:#667eea; color:white; font-weight:600; }
-    .comparison-table tr:hover { background:#f7fafc; }
+/* Nagging popup */
+.nagging-popup { background: white; border-radius: 12px; padding: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin: 1rem 0; animation: slideIn 0.3s ease-out; }
+@keyframes slideIn { from { opacity:0; transform: translateY(-10px);} to{opacity:1; transform:translateY(0);} }
 
-    /* Footer */
-    .footer { background:#1a1a2e; color:white; text-align:center; padding:2rem; margin-top:3rem; }
-    .references { max-width:1200px; margin:0 auto; text-align:left; }
-    .references h3 { margin-bottom:1rem; }
-    .references ul { list-style:none; }
-    .references li { margin:0.5rem 0; font-size:0.9rem; color:#a0a0a0; }
+/* Ethical Design Section */
+.ethical-section { background: linear-gradient(135deg,#11998e 0%,#38ef7d 100%); border-radius:20px; padding:3rem; color:white; margin:3rem 0; }
+.ethical-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap:2rem; margin-top:2rem; }
+.ethical-item { text-align:center; padding:1.5rem; background: rgba(255,255,255,0.1); border-radius:15px; backdrop-filter:blur(10px); transition: transform 0.3s; }
+.ethical-item:hover { transform: scale(1.05); }
 
-    /* Buttons */
-    .btn { display:inline-block; padding:0.75rem 1.5rem; border-radius:10px; text-decoration:none; font-weight:500; transition: all 0.3s; }
-    .btn-primary { background:#667eea; color:white; }
-    .btn-primary:hover { background:#5a67d8; transform:translateY(-2px); }
+/* Comparison Table */
+.comparison-table { background: white; border-radius: 20px; overflow: hidden; margin:3rem 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.comparison-table table { width: 100%; border-collapse: collapse; }
+.comparison-table th, .comparison-table td { padding: 1rem; border-bottom:1px solid #e2e8f0; }
+.comparison-table th { background: #667eea; color:white; font-weight:600; }
+.comparison-table tr:hover { background:#f7fafc; }
 
-    @media (max-width:768px) {
-        .hero h1 { font-size:2rem; }
-        .patterns-grid { grid-template-columns:1fr; }
-        .ethical-section { padding:1.5rem; }
-        .nav-container { flex-direction:column; }
-    }
+/* Feedback Messages */
+.feedback-message { display:none; margin-top:1rem; padding:0.5rem; border-radius:6px; font-size:0.9rem; }
+.feedback-message.show { display:block; animation: fadeIn 0.3s; }
+@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+.success-message { background:#d4edda; color:#155724; border:1px solid #c3e6cb; }
+.warning-message { background:#fff3cd; color:#856404; border:1px solid #ffeeba; }
 
-    /* Feedback messages */
-    .feedback-message { margin-top:1rem; padding:0.5rem; border-radius:6px; font-size:0.9rem; display:none; }
-    .feedback-message.show { display:block; animation:fadeIn 0.3s; }
-    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-    .success-message { background:#d4edda; color:#155724; border:1px solid #c3e6cb; }
-    .warning-message { background:#fff3cd; color:#856404; border:1px solid #ffeeba; }
+/* Footer */
+.footer { background:#1a1a2e; color:white; text-align:center; padding:2rem; margin-top:3rem; }
+.references { max-width:1200px; margin:0 auto; text-align:left; }
+.references ul { list-style:none; padding-left:0; }
+.references li { margin:0.5rem 0; font-size:0.9rem; color:#a0a0a0; }
 
-    /* Section padding to avoid sticky nav */
-    #dark-patterns, #ethical, #comparison, #references { padding-top:100px; }
-    .guilt-button:active, .btn:active { transform:scale(0.98); transition:transform 0.1s; }
+/* Responsive */
+@media(max-width:768px) { .patterns-grid { grid-template-columns:1fr; } .hero h1 { font-size:2rem; } }
 </style>
 </head>
 <body>
+<!-- ===== Navigation ===== -->
 <nav class="nav">
     <div class="nav-container">
         <div class="logo">🎭 Illusion of Choice</div>
@@ -106,148 +123,170 @@
     </div>
 </nav>
 
-<div class="container">
-    <div class="hero">
-        <div class="warning-badge">⚠️ Educational Demo</div>
-        <h1>Understanding Dark Patterns</h1>
-        <p class="subtitle">How websites manipulate your choices — and how to spot them</p>
-        <a href="#dark-patterns" class="btn btn-primary">Explore Examples →</a>
-    </div>
-
-    <section id="dark-patterns">
-        <h2 style="text-align:center; margin-bottom:2rem; color:white;">Common Dark Patterns</h2>
-        <div class="patterns-grid">
-            <!-- Confirmshaming -->
-            <div class="pattern-card">
-                <div class="card-header confirmshaming"><h2>Confirmshaming</h2><p>Guilt-based manipulation</p></div>
-                <div class="card-content">
-                    <div class="demo-box">
-                        <div class="confirmshaming-demo">
-                            <p><strong>Newsletter Subscription</strong></p>
-                            <button class="guilt-button" onclick="showFeedback('subscribe','You subscribed!')">✅ Yes, I want exclusive deals</button>
-                            <button class="guilt-button no-button" onclick="showFeedback('unsubscribe','⚠️ You clicked: No, I don’t want to save money')">❌ No, I don't want to save money</button>
-                            <div id="subscribe-feedback" class="feedback-message"></div>
-                            <div id="unsubscribe-feedback" class="feedback-message"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Roach Motel -->
-            <div class="pattern-card">
-                <div class="card-header roach"><h2>Roach Motel</h2><p>Easy in, hard out</p></div>
-                <div class="card-content">
-                    <div class="demo-box">
-                        <p><strong>Cancel Membership</strong></p>
-                        <div class="cancel-steps">
-                            <div class="cancel-step">Step 1: Account Settings</div>
-                            <div class="cancel-step">Step 2: Scroll to bottom</div>
-                            <div class="cancel-step">Step 3: Click 3 confirmation screens</div>
-                            <div class="cancel-step">Step 4: Guilt message</div>
-                        </div>
-                        <button class="btn" onclick="showFeedback('roach','⚠️ After 4 steps, you finally cancelled!')">Attempt to Cancel</button>
-                        <div id="roach-feedback" class="feedback-message"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Nagging -->
-            <div class="pattern-card">
-                <div class="card-header nagging"><h2>Nagging</h2><p>Persistent interruptions</p></div>
-                <div class="card-content">
-                    <div class="demo-box">
-                        <div id="nagging-container">
-                            <div class="nagging-popup" id="nag1">
-                                <p>📱 <strong>Enable notifications?</strong></p>
-                                <button onclick="dismissNag(1)">Not Now</button>
-                                <button onclick="enableNotifications()">Enable</button>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" onclick="triggerNag()">Continue Browsing</button>
-                        <div id="nagging-feedback" class="feedback-message"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="ethical" class="ethical-section">
-        <h2 style="text-align:center;">✨ Ethical Design Principles</h2>
-        <div class="ethical-grid">
-            <div class="ethical-item"><h3>🔓 Clear Choices</h3><p>Options presented equally</p></div>
-            <div class="ethical-item"><h3>🎯 No Manipulation</h3><p>Avoid guilt or urgency</p></div>
-            <div class="ethical-item"><h3>🚪 Easy Unsubscribe</h3><p>Cancel easily</p></div>
-            <div class="ethical-item"><h3>❤️ Respect Users</h3><p>User autonomy first</p></div>
-        </div>
-    </section>
-
-    <section id="comparison" class="comparison-table">
-        <table>
-            <thead><tr><th>Dark Pattern</th><th>Manipulation</th><th>Impact</th><th>Alternative</th></tr></thead>
-            <tbody>
-                <tr><td>Confirmshaming</td><td>Guilt/shame</td><td>Forced compliance</td><td>Neutral opt-out</td></tr>
-                <tr><td>Roach Motel</td><td>Hard cancellation</td><td>Unwanted charges</td><td>One-click cancel</td></tr>
-                <tr><td>Nagging</td><td>Persistent requests</td><td>Frustration</td><td>Limited prompts</td></tr>
-            </tbody>
-        </table>
-    </section>
-
-    <footer id="references" class="footer">
-        <h3>📚 References</h3>
-        <ul>
-            <li>Curley et al., 2021. Dark pattern detection framework.</li>
-            <li>Duque Hurtado, 2024. Designing for revaluing. RMIT University.</li>
-            <li>Kollmer & Eckhardt, 2023. Dark patterns. Business & Info Systems Eng.</li>
-        </ul>
-        <p>© 2024 Illusion of Choice Project | Educational</p>
-    </footer>
+<!-- ===== Hero ===== -->
+<div class="hero">
+    <div class="warning-badge">⚠️ Educational Demo</div>
+    <h1>Understanding Dark Patterns</h1>
+    <p class="subtitle">How websites manipulate user choices — and how to spot them</p>
+    <button class="btn btn-primary" onclick="document.getElementById('dark-patterns').scrollIntoView({behavior:'smooth'})">Explore Examples →</button>
 </div>
 
+<div class="container">
+<!-- ===== Dark Patterns Section ===== -->
+<section id="dark-patterns">
+<h2 style="text-align:center; color:white;">Common Dark Patterns</h2>
+<div class="patterns-grid">
+
+<!-- Confirmshaming -->
+<div class="pattern-card">
+<div class="card-header confirmshaming"><h2>Confirmshaming</h2><p>Guilt-based manipulation</p></div>
+<div class="card-content">
+<div class="demo-box">
+<p><strong>Newsletter Subscription</strong></p>
+<button class="guilt-button yes-button" onclick="subscribe()">✅ Yes, I want deals</button>
+<button class="guilt-button no-button" onclick="unsubscribe()">❌ No, I don’t want deals</button>
+<div id="subscribe-feedback" class="feedback-message"></div>
+<div id="unsubscribe-feedback" class="feedback-message"></div>
+<p style="font-size:0.85rem; color:#718096;">🔍 Analysis: The second option uses guilt to pressure users into subscribing.</p>
+</div>
+<p><strong>Impact:</strong> Users feel ashamed to opt out.</p>
+<p><strong>✅ Solution:</strong> Neutral language like "No thanks" or "Unsubscribe."</p>
+</div>
+</div>
+
+<!-- Roach Motel -->
+<div class="pattern-card">
+<div class="card-header roach"><h2>Roach Motel</h2><p>Easy in, hard out</p></div>
+<div class="card-content">
+<div class="demo-box">
+<p><strong>Cancel Membership</strong></p>
+<div class="cancel-steps">
+<div class="cancel-step">Step 1: Click "Account Settings"</div>
+<div class="cancel-step">Step 2: Scroll to bottom → "Cancel Subscription"</div>
+<div class="cancel-step">Step 3: Click 3 confirmation screens</div>
+<div class="cancel-step">Step 4: Guilt message "We’re sad to see you go"</div>
+</div>
+<button class="btn" style="background:#ff4757;color:white;width:100%;" onclick="attemptCancel()">Attempt to Cancel</button>
+<div id="roach-feedback" class="feedback-message"></div>
+</div>
+<p><strong>Impact:</strong> Users give up, leading to unwanted charges.</p>
+<p><strong>✅ Solution:</strong> One-click cancellation.</p>
+</div>
+</div>
+
+<!-- Nagging -->
+<div class="pattern-card">
+<div class="card-header nagging"><h2>Nagging</h2><p>Persistent interruptions</p></div>
+<div class="card-content">
+<div class="demo-box">
+<div class="nagging-popup" id="nag1">
+<p>📱 <strong>Enable notifications?</strong> Get instant updates!</p>
+<button onclick="dismissNag(1)" style="margin-right:0.5rem;">Not Now</button>
+<button onclick="enableNotifications()">Enable</button>
+</div>
+<button onclick="triggerNag()" style="margin-top:0.5rem;width:100%;" class="btn btn-primary">Continue Browsing</button>
+<div id="nagging-feedback" class="feedback-message"></div>
+</div>
+<p><strong>Impact:</strong> Repeated requests frustrate users.</p>
+<p><strong>✅ Solution:</strong> Respect user choices with "Don’t ask again".</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- ===== Ethical Design ===== -->
+<section id="ethical">
+<div class="ethical-section">
+<h2 style="text-align:center;">✨ Ethical Design Principles</h2>
+<div class="ethical-grid">
+<div class="ethical-item"><h3>🔓 Clear Choices</h3><p>Options presented equally without manipulation</p></div>
+<div class="ethical-item"><h3>🎯 No Manipulation</h3><p>Avoid guilt, urgency, or hidden costs</p></div>
+<div class="ethical-item"><h3>🚪 Easy Unsubscribe</h3><p>Cancel with same ease as signing up</p></div>
+<div class="ethical-item"><h3>❤️ Respect Users</h3><p>Prioritize user autonomy over metrics</p></div>
+</div>
+</div>
+</section>
+
+<!-- ===== Comparison Table ===== -->
+<section id="comparison">
+<div class="comparison-table">
+<table>
+<thead>
+<tr><th>Dark Pattern</th><th>Manipulation Tactic</th><th>User Impact</th><th>Ethical Alternative</th></tr>
+</thead>
+<tbody>
+<tr><td>Confirmshaming</td><td>Guilt and shame</td><td>Forced compliance, resentment</td><td>Neutral opt-out language</td></tr>
+<tr><td>Roach Motel</td><td>Hidden/complex cancellation</td><td>Unwanted charges, frustration</td><td>One-click cancellation</td></tr>
+<tr><td>Nagging</td><td>Persistent interruptions</td><td>Reduced satisfaction, fatigue</td><td>Limited prompts with opt-out</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- ===== Footer / References ===== -->
+<footer id="references" class="footer">
+<div class="references">
+<h3>📚 References</h3>
+<ul>
+<li>Curley, A. et al. (2021). The Design of a framework for detection of web-based dark patterns.</li>
+<li>Duque Hurtado, M. (2024). Everyday designing for revaluing (Doctoral dissertation, RMIT University).</li>
+<li>Kollmer, T., & Eckhardt, A. (2023). Dark patterns. Business & Information Systems Engineering, 65(2), 201-208.</li>
+<li>Mathur, A., Kshirsagar, M., & Mayer, J. (2021). What makes a dark pattern... dark?</li>
+<li>Tamburri, D. A. (2020). Design principles for GDPR. Information Systems, 91, 101469.</li>
+</ul>
+<p style="margin-top:1rem;font-size:0.85rem;">© 2024 Illusion of Choice | Educational Purpose Only</p>
+</div>
+</footer>
+</div>
+
+<!-- ===== Interactive Script ===== -->
 <script>
-    let nagDismissed = false;
-    function showFeedback(type,message){
-        const el=document.getElementById(type+'-feedback');
-        if(el){ el.textContent=message;
-            el.className='feedback-message show '+(message.includes('⚠️')?'warning-message':'success-message');
-            setTimeout(()=>{el.classList.remove('show');},3000);
-        }
+let nagDismissed = false;
+
+function showFeedback(type, message) {
+    const feedbackDiv = document.getElementById(`${type}-feedback`);
+    if(feedbackDiv){
+        feedbackDiv.textContent = message;
+        feedbackDiv.className = `feedback-message show ${message.includes('⚠️') ? 'warning-message':'success-message'}`;
+        setTimeout(()=>{feedbackDiv.classList.remove('show');},3000);
     }
-    function dismissNag(id){document.getElementById('nag'+id).style.display='none';
-        showFeedback('nagging','⚠️ You dismissed the popup. It may return!');}
-    function enableNotifications(){document.getElementById('nag1').style.display='none';
-        showFeedback('nagging','✅ Notifications enabled'); nagDismissed=true;}
-    function triggerNag(){ const nag=document.getElementById('nag1');
-        if(!nagDismissed && nag.style.display==='none'){ nag.style.display='block';
-            showFeedback('nagging','⚠️ Popup returned!'); }
-        else if(nagDismissed){ showFeedback('nagging','Thanks! Already handled.'); } }
-    <script>
-    let nagDismissed = false;
-    function showFeedback(type,message){
-        const el=document.getElementById(type+'-feedback');
-        if(el){ 
-            el.textContent=message;
-            el.className='feedback-message show '+(message.includes('⚠️')?'warning-message':'success-message');
-            setTimeout(()=>{el.classList.remove('show');},3000);
-        }
+}
+
+/* Confirmshaming */
+function subscribe(){ showFeedback('subscribe','✅ You subscribed!'); }
+function unsubscribe(){ showFeedback('unsubscribe','⚠️ You clicked: No, I don’t want to save money!'); }
+
+/* Roach Motel */
+function attemptCancel(){ showFeedback('roach','⚠️ You went through multiple steps to cancel!'); }
+
+/* Nagging */
+function dismissNag(id){
+    const nag=document.getElementById(`nag${id}`);
+    if(nag){ nag.style.display='none'; showFeedback('nagging','⚠️ You dismissed the popup. It may return!'); }
+}
+function enableNotifications(){
+    document.getElementById('nag1').style.display='none';
+    showFeedback('nagging','✅ Notifications enabled');
+    nagDismissed=true;
+}
+function triggerNag(){
+    const nag=document.getElementById('nag1');
+    if(!nagDismissed && nag.style.display==='none'){
+        nag.style.display='block';
+        showFeedback('nagging','⚠️ Popup returned!');
+    } else if(nagDismissed){
+        showFeedback('nagging','Thanks! Already handled.');
     }
-    function dismissNag(id){
-        document.getElementById('nag'+id).style.display='none';
-        showFeedback('nagging','⚠️ You dismissed the popup. It may return!');
-    }
-    function enableNotifications(){
-        document.getElementById('nag1').style.display='none';
-        showFeedback('nagging','✅ Notifications enabled');
-        nagDismissed=true;
-    }
-    function triggerNag(){
-        const nag=document.getElementById('nag1');
-        if(!nagDismissed && nag.style.display==='none'){
-            nag.style.display='block';
-            showFeedback('nagging','⚠️ Popup returned!');
-        } else if(nagDismissed){
-            showFeedback('nagging','Thanks! Already handled.');
-        }
-    }
+}
+
+/* Button hover animation */
+const buttons = document.querySelectorAll('button');
+buttons.forEach(btn=>{
+    btn.addEventListener('mouseover',()=>btn.style.transform='scale(1.05)');
+    btn.addEventListener('mouseout',()=>btn.style.transform='scale(1)');
+});
 </script>
+
 </body>
 </html>
